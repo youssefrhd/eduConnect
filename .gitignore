@@ -1,0 +1,10 @@
+# Common ignores for both projects
+.env
+.env.local
+*.env
+.DS_Store
+Thumbs.db
+*.log
+
+# Don't ignore .gitignore files themselves
+!.gitignore

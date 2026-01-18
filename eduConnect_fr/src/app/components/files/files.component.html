@@ -1,0 +1,235 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white">
+  <app-navbar></app-navbar>
+
+  <main class="px-4 py-6 md:px-6 md:py-8 max-w-7xl mx-auto">
+    
+    <div class="mb-8">
+      <div class="bg-gradient-to-r from-gray-900 to-gray-800 border border-orange-500/20 rounded-2xl p-6 md:p-8">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
+          <div>
+            <h1 class="text-3xl md:text-4xl font-black mb-2">
+              <span class="text-gradient-orange">FILE MANAGER</span>
+            </h1>
+            <p class="text-gray-400">Upload, organize, and manage your study materials</p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 mt-4 md:mt-0">
+            <button 
+              (click)="showUploadModal = true"
+              class="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl font-bold text-white hover:scale-105 transition-transform">
+              📤 UPLOAD NEW
+            </button>
+            
+            <button 
+              *ngIf="selectedFiles.length > 0"
+              (click)="deleteSelected()"
+              class="px-6 py-3 bg-red-500/20 border border-red-500/30 rounded-xl font-bold text-red-400 hover:text-red-300">
+              DELETE ({{selectedFiles.length}})
+            </button>
+          </div>
+        </div>
+
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          <div class="bg-gray-800/50 border border-gray-800 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-400 text-sm">Total Files</p>
+                <p class="text-2xl font-bold">{{files.length}}</p>
+              </div>
+              <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-600/20 flex items-center justify-center">
+                📁
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-800/50 border border-gray-800 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-400 text-sm">Storage Used</p>
+                <p class="text-2xl font-bold">{{totalSize}}</p>
+              </div>
+              <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
+                💾
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-800/50 border border-gray-800 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-400 text-sm">PDF Files</p>
+                <p class="text-2xl font-bold">{{pdfCount}}</p>
+              </div>
+              <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center">
+                📄
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-800/50 border border-gray-800 rounded-xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-gray-400 text-sm">Shared Files</p>
+                <p class="text-2xl font-bold">{{sharedCount}}</p>
+              </div>
+              <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+                ↗️
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm"
+            placeholder="Search files..."
+            class="pl-10 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg w-64 focus:border-orange-500">
+          <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+        </div>
+
+        <select [(ngModel)]="filterType" class="bg-gray-900 border border-gray-800 rounded-lg px-4 py-2.5 focus:border-orange-500">
+          <option value="all">All Types</option>
+          <option value="PDF">PDF</option>
+          <option value="DOCX">DOCX</option>
+          <option value="PPTX">PPTX</option>
+          <option value="IMAGE">Images</option>
+        </select>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button (click)="selectAll()" class="px-4 py-2.5 border border-gray-800 rounded-lg hover:border-orange-500">
+          {{selectedFiles.length === files.length ? 'Deselect All' : 'Select All'}}
+        </button>
+        <button (click)="viewMode = viewMode === 'grid' ? 'list' : 'grid'" class="px-4 py-2.5 border border-gray-800 rounded-lg hover:border-orange-500">
+          {{viewMode === 'grid' ? '📋 List' : '🗂️ Grid'}}
+        </button>
+      </div>
+    </div>
+
+    
+    <div *ngIf="viewMode==='list'" class="bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-900 border-b border-gray-800">
+            <tr>
+              <th class="py-4 px-6">
+                <input type="checkbox" 
+                  [checked]="selectedFiles.length === filteredFiles.length && filteredFiles.length>0" 
+                  (change)="selectAll()" 
+                  class="rounded border-gray-700 bg-gray-800 text-orange-500">
+              </th>
+              <th class="py-4 px-6 text-left text-gray-400">FILE NAME</th>
+              <th class="py-4 px-6 text-left text-gray-400">TYPE</th>
+              <th class="py-4 px-6 text-left text-gray-400">SIZE</th>
+              <th class="py-4 px-6 text-left text-gray-400">COURSE</th>
+              <th class="py-4 px-6 text-left text-gray-400">STATUS</th>
+              <th class="py-4 px-6 text-left text-gray-400">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of filteredFiles" class="border-b border-gray-800 hover:bg-gray-800/50 transition-colors">
+              <td class="py-4 px-6">
+                <input type="checkbox" [checked]="selectedFiles.includes(file.id)" (change)="toggleSelect(file.id)" class="rounded border-gray-700 bg-gray-800 text-orange-500">
+              </td>
+              <td class="py-4 px-6 flex items-center space-x-3">
+                <div [class]="file.color + ' h-10 w-10 rounded-lg flex items-center justify-center'">
+                  {{file.icon}}
+                </div>
+                <div>
+                  <p class="font-medium">{{file.name}}</p>
+                  <p class="text-gray-400 text-sm">{{file.uploaded}}</p>
+                </div>
+              </td>
+              <td class="py-4 px-6">{{file.type}}</td>
+              <td class="py-4 px-6">{{file.size}}</td>
+              <td class="py-4 px-6">{{file.course}}</td>
+              <td class="py-4 px-6">
+                <span [class]="getStatusClass(file.status) + ' px-3 py-1 rounded-full text-xs font-medium'">{{file.status.toUpperCase()}}</span>
+              </td>
+              <td class="py-4 px-6 flex space-x-2">
+                <button (click)="downloadFile(file)" title="Download">⬇️</button>
+                <button (click)="shareFile(file)" title="Share">↗️</button>
+                <button (click)="editFile(file)" title="Edit">✏️</button>
+                <button (click)="deleteFile(file)" title="Delete">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+    <div *ngIf="showUploadModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" (click)="showUploadModal=false">
+      <div class="bg-gray-900 rounded-2xl p-6 w-full max-w-2xl" (click)="$event.stopPropagation()">
+
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-bold">Upload Files</h3>
+          <button (click)="showUploadModal=false" class="p-2 hover:bg-gray-800 rounded-lg">✕</button>
+        </div>
+
+        
+        <div class="border-2 border-dashed border-gray-700 rounded-xl p-12 text-center cursor-pointer hover:border-orange-500"
+          (click)="triggerFileInput()"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+          [class.border-orange-500]="isDragging">
+          <p class="text-xl font-bold mb-2">Drop files here or click to browse</p>
+          <p class="text-gray-400 text-sm">Supports PDF, DOC, PPT, JPG, PNG</p>
+        </div>
+
+        
+        <input id="fileInput" type="file" class="hidden" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png" (change)="onFileInputChange($event)">
+
+        
+        <div *ngIf="uploadFiles.length>0" class="mb-6 mt-4">
+          <h4 class="font-bold mb-2">Selected Files ({{uploadFiles.length}})</h4>
+          <div *ngFor="let file of uploadFiles; let i = index" class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg mb-1">
+            <div>{{file.name}} ({{(file.size/1024/1024).toFixed(2)}} MB)</div>
+            <button (click)="removeUploadFile(i)" class="text-red-400">✕</button>
+          </div>
+        </div>
+
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Course</label>
+            <select [(ngModel)]="uploadCourse" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5">
+              <option value="">Select Course</option>
+              <option value="Learning Techniques">Learning Techniques</option>
+              <option value="Project Management">Project Management</option>
+              <option value="Digital Transformation">Digital Transformation</option>
+              <option value="Research Methods">Research Methods</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Visibility</label>
+            <select [(ngModel)]="uploadVisibility" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5">
+              <option value="private">Private</option>
+              <option value="shared">Shared with Class</option>
+              <option value="public">Public</option>
+            </select>
+          </div>
+        </div>
+
+        
+        <div class="flex space-x-3 mt-4 items-center">
+          <button (click)="showUploadModal=false" class="flex-1 py-3 border border-gray-700 rounded-xl">Cancel</button>
+
+          <button (click)="processUpload()" 
+                  [disabled]="uploadFiles.length===0 || loading" 
+                  class="flex-1 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl font-bold disabled:opacity-50 relative">
+            <span *ngIf="!loading">UPLOAD {{uploadFiles.length}} FILES</span>
+            <span *ngIf="loading" class="flex items-center justify-center space-x-2">
+              ⏳ Uploading...
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

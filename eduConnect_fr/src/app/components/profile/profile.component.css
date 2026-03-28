@@ -1,0 +1,68 @@
+
+:host {
+  display: block;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.08);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 2.5rem;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rounded-3xl,
+.rounded-2xl {
+  animation: slideUp 0.4s ease both;
+}
+
+.rounded-3xl { animation-delay: 0.05s; }
+.lg\:col-span-2 > .rounded-2xl { animation-delay: 0.15s; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)  scale(1); }
+}
+
+[class*="fixed bottom"] {
+  animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.rounded-2xl {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.rounded-2xl:hover {
+  border-color: rgba(249, 115, 22, 0.15);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+}

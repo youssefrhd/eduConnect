@@ -17,11 +17,11 @@ export class NavbarComponent  implements OnInit{
   unreadNotifications = 3;
   
   navItems: NavItem[] = [
-    { name: 'DASHBOARD', route: '/dashboard', icon: '📊' },
-    { name: 'FILES', route: '/files', icon: '📁' },
-    { name: 'CHAT', route: '/chat', icon: '💬' },
-    { name: 'PROFILE', route: '/profile', icon: '👤' },
-    { name: 'SETTINGS', route: '/settings', icon: '⚙️' }
+    { name: 'DASHBOARD', route: '/dashboard', icon: '' },
+    { name: 'FILES', route: '/file-manager', icon: '' },
+    { name: 'CHAT', route: '/chat', icon: '' },
+    { name: 'PROFILE', route: '/profile', icon: '' },
+    { name: 'SETTINGS', route: '/settings', icon: '' }
   ];
   
   userMenuItems: UserMenuItem[] = [
@@ -68,15 +68,9 @@ export class NavbarComponent  implements OnInit{
   }
 
   loadCurrentUser() {
-    this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser) {
-      this.currentUser = {
-        userId:"1",
-        name: 'Aymen El Rhadir',
-        email: 'aymen@student.de',
-        role: 'student'
-      };
-    }
+    this.authService.getCurrentUser$().subscribe(user=>{
+      this.currentUser=user;
+    });
   }
 
   toggleMobileMenu() {

@@ -46,6 +46,7 @@ public class AuthController {
         this.verificationService = verificationService;
     }
 
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
@@ -55,7 +56,7 @@ public class AuthController {
                             request.getEmail(),
                             request.getPassword()));
 
-            User user = (User) userService.loadUserByUsername(request.getEmail());
+            User user = userService.loadUser(request.getEmail());
 
             String token = jwtService.generateToken((User) user);
 
@@ -69,23 +70,26 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
-
-        if (userRepo.findByEmail(request.getEmail()).isPresent()) {
+        System.out.println("entered in the Controller");
+        if (userService.loadUser(request.getEmail())!=null) {
             return ResponseEntity.badRequest().body("Email already exists");
         }
-
+       System.out.println(request.getEmail());
         User user = new User();
         user.setEmail(request.getEmail());
         user.setName(request.getName());
         user.setBirthday(request.getBirthday());
-        user.setRole("USER");
+        user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setEmailVerified(false);
 
         userRepo.save(user);
-
+       
+        try {
         verificationService.sendVerificationEmail(user);
-
+     } catch (Exception e) {
+    e.printStackTrace();
+}
         return ResponseEntity.ok("Check your email to verify your account");
     }
 
@@ -100,7 +104,7 @@ public class AuthController {
     @PostMapping("/resend-email")
     public ResponseEntity<?> resendEmail(@RequestParam String email) {
 
-        User user = (User) userService.loadUserByUsername(email);
+        User user = userService.loadUser(email);
         verificationService.sendVerificationEmail(user);
         return ResponseEntity.ok("Check your email to verify your account");
 

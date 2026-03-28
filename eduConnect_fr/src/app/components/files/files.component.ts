@@ -70,7 +70,7 @@ export class FilesComponent implements OnInit {
   }
 
   get totalSize(): string {
-    const total = this.files.reduce((sum, file) => sum + parseFloat(file.size), 0);
+    const total = this.files.reduce((sum, file) => sum + parseFloat(file.size), 0)/1024;
     return total.toFixed(1) + ' MB';
   }
 

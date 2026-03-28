@@ -30,13 +30,13 @@ export class AuthService {
         const user: User = JSON.parse(userStr);
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
-        console.log('✅ User loaded from localStorage:', user.name);
+        console.log(' User loaded from localStorage:', user.name);
       } catch (error) {
-        console.error('❌ Error parsing user from localStorage:', error);
+        console.error(' Error parsing user from localStorage:', error);
         this.clearAuthData();
       }
     } else {
-      console.log('ℹ️ No stored user found');
+      console.log('No stored user found');
     }
   }
 
@@ -56,12 +56,19 @@ export class AuthService {
         tap(response => {
           if (response.token) {
             
-            const user: User = {
+            const user: User  = {
               userId:response.userId,
               name: response.name || email.split('@')[0],
               email: response.email || email,
               role: response.role || 'student',
-              token: response.token
+              token: response.token,
+              city:'',
+              bio:'',
+              picture:'',
+              createdAt:'',
+              birthday:'',
+              password:'',
+              handynummer:''
             };
             
             
@@ -194,5 +201,12 @@ export interface User {
   name: string;
   email: string;
   role: string;
+  city :string;
+  bio:string;
+  picture:string;
+  createdAt:string;
+  birthday:string;
+  password:string;
+  handynummer:string;
   token?: string;
 }

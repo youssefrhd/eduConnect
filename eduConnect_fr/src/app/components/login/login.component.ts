@@ -2,7 +2,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { filter, finalize } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
@@ -10,12 +10,13 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   
 })
 export class LoginComponent implements OnInit {
+
  @ViewChild('particlesContainer') particlesContainer!: ElementRef;
   
   
@@ -44,8 +45,9 @@ export class LoginComponent implements OnInit {
     
     this.createParticles();
   }
-
-
+  goToRegister() {
+     this.router.navigate(['/register']);
+  }
   
  onSubmit() {
     if (!this.email || !this.password) {

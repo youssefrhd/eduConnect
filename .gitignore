@@ -1,10 +1,34 @@
-# Common ignores for both projects
-.env
-.env.local
-*.env
-.DS_Store
-Thumbs.db
-*.log
+# Backend
+eduConnect_back/target/
+eduConnect_back/*.jar
+eduConnect_back/src/main/resources/application.properties
+eduConnect_back/src/main/resources/application-*.properties
 
-# Don't ignore .gitignore files themselves
-!.gitignore
+# Frontend
+eduConnect_fr/node_modules/
+eduConnect_fr/dist/
+eduConnect_fr/.angular/
+
+# Common
+.env
+.DS_Store
+.idea/
+.vscode/
+
+# Java
+target/
+*.log
+hs_err_pid*
+replay_pid*
+
+# Node / Angular
+node_modules/
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+application.properties

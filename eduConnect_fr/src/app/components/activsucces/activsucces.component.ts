@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-activsucces',
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './activsucces.component.html',
   styleUrl: './activsucces.component.css',
   animations: [

@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private String name;
 
     @Column(length = 50)
-    private String role="USER";
+    private String role="ROLE_USER";
 
     @Column(nullable = false, length = 255)
     private String password;
@@ -49,6 +49,13 @@ public class User implements UserDetails {
 
     @Column (nullable=false)
     private LocalDate birthday;
+
+    @Column(length = 15)
+    private String city;
+    @Column(length = 25)
+    private String bio;
+    @Column(length = 20)
+    private String picture;
 
      @Column(nullable = false)
     private Instant createdAt = Instant.now();
@@ -109,6 +116,38 @@ public class User implements UserDetails {
          return handynummer;
      }
 
+     @Override
+    public String toString() {
+        return "User [userId=" + userId + ", email=" + email + ", name=" + name + ", role=" + role + ", password="
+                + password + ", handynummer=" + handynummer + ", emailVerified=" + emailVerified + ", birthday="
+                + birthday + ", city=" + city + ", bio=" + bio + ", picture=" + picture + ", createdAt=" + createdAt
+                + "]";
+    }
+
+     public String getCity() {
+        return city;
+    }
+
+     public void setCity(String city) {
+         this.city = city;
+     }
+
+     public String getBio() {
+         return bio;
+     }
+
+     public void setBio(String bio) {
+         this.bio = bio;
+     }
+
+     public String getPicture() {
+         return picture;
+     }
+
+     public void setPicture(String picture) {
+         this.picture = picture;
+     }
+
      public void setHandynummer(String handynummer) {
          this.handynummer = handynummer;
      }
@@ -123,7 +162,7 @@ public class User implements UserDetails {
 
       @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + getRole()));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     public void setPassword(String password) {

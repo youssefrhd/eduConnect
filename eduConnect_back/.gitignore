@@ -9,3 +9,4 @@ src/main/resources/static/*
 *.iml
 *.bak
 Thumbs.db
+src/main/resources/application.properties

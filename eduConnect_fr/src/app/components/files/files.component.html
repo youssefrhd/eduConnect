@@ -17,7 +17,7 @@
             <button 
               (click)="showUploadModal = true"
               class="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl font-bold text-white hover:scale-105 transition-transform">
-              📤 UPLOAD NEW
+               UPLOAD NEW
             </button>
             
             <button 
@@ -49,7 +49,7 @@
                 <p class="text-2xl font-bold">{{totalSize}}</p>
               </div>
               <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
-                💾
+                save
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
                 <p class="text-2xl font-bold">{{sharedCount}}</p>
               </div>
               <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                ↗️
+                share
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@
           {{selectedFiles.length === files.length ? 'Deselect All' : 'Select All'}}
         </button>
         <button (click)="viewMode = viewMode === 'grid' ? 'list' : 'grid'" class="px-4 py-2.5 border border-gray-800 rounded-lg hover:border-orange-500">
-          {{viewMode === 'grid' ? '📋 List' : '🗂️ Grid'}}
+          {{viewMode === 'grid' ? ' List' : ' Grid'}}
         </button>
       </div>
     </div>

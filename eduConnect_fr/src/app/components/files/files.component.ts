@@ -210,13 +210,13 @@ export class FilesComponent implements OnInit {
 
   getFileIcon(filename: string): string {
     const ext = filename.split('.').pop()?.toLowerCase();
-    if (ext==='pdf') return '📄';
-    if (['doc','docx'].includes(ext||'')) return '📝';
-    if (['ppt','pptx'].includes(ext||'')) return '📊';
-    if (['jpg','jpeg','png','gif'].includes(ext||'')) return '🖼️';
-    if (['mp3','wav','m4a'].includes(ext||'')) return '🎵';
-    if (['zip','rar'].includes(ext||'')) return '📦';
-    return '📁';
+    if (ext==='pdf') return '';
+    if (['doc','docx'].includes(ext||'')) return '';
+    if (['ppt','pptx'].includes(ext||'')) return '';
+    if (['jpg','jpeg','png','gif'].includes(ext||'')) return '';
+    if (['mp3','wav','m4a'].includes(ext||'')) return '';
+    if (['zip','rar'].includes(ext||'')) return '';
+    return '';
   }
 
   getFileColor(filename: string): string {

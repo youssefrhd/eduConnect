@@ -57,6 +57,7 @@ public class AuthController {
                             request.getPassword()));
 
             User user = userService.loadUser(request.getEmail());
+            
 
             String token = jwtService.generateToken((User) user);
 
@@ -72,7 +73,7 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         System.out.println("entered in the Controller");
         if (userService.loadUser(request.getEmail())!=null) {
-            return ResponseEntity.badRequest().body("Email already exists");
+            return ResponseEntity.badRequest().body("You have already activated the Account !");
         }
        System.out.println(request.getEmail());
         User user = new User();

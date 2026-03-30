@@ -38,7 +38,7 @@
                 <p class="text-2xl font-bold">{{files.length}}</p>
               </div>
               <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-600/20 flex items-center justify-center">
-                📁
+                
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
                 <p class="text-2xl font-bold">{{pdfCount}}</p>
               </div>
               <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center">
-                📄
+                
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
                 <p class="text-2xl font-bold">{{sharedCount}}</p>
               </div>
               <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                share
+                
               </div>
             </div>
           </div>
@@ -151,10 +151,10 @@
                 <span [class]="getStatusClass(file.status) + ' px-3 py-1 rounded-full text-xs font-medium'">{{file.status.toUpperCase()}}</span>
               </td>
               <td class="py-4 px-6 flex space-x-2">
-                <button (click)="downloadFile(file)" title="Download">⬇️</button>
-                <button (click)="shareFile(file)" title="Share">↗️</button>
-                <button (click)="editFile(file)" title="Edit">✏️</button>
-                <button (click)="deleteFile(file)" title="Delete">🗑️</button>
+                <button (click)="downloadFile(file)" title="Download">Download</button>
+                <button (click)="shareFile(file)" title="Share">Share</button>
+                <button (click)="editFile(file)" title="Edit">Edit</button>
+                <button (click)="deleteFile(file)" title="Delete">Delete</button>
               </td>
             </tr>
           </tbody>

@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.mail.Multipart;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 @RestController
 @RequestMapping("/profile")
@@ -24,9 +25,10 @@ import org.springframework.security.core.Authentication;
 public class AccountController {
 
     private final UserService userServ;
-    
-    public AccountController(UserService userServ) {
+    private final PasswordEncoder passwordEncoder;
+    public AccountController(UserService userServ,PasswordEncoder passwordEncoder) {
         this.userServ = userServ;
+        this.passwordEncoder=passwordEncoder;
     }
     @PutMapping("/updatePassword")
     public ResponseEntity<?> updatePassword(Authentication auth,String newPass) {

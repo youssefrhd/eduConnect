@@ -232,16 +232,11 @@ http://localhost:4200
 - ☁️ Docker deployment  
 - 🔐 Advanced role management  
 
----
-
-## 📄 License
-
-MIT License  
 
 ---
 
 ## 👨‍💻 Author
 
-**Youssef Elrhadir**  
+**Youssef El Rhadir**  
 📧 elrhadiry1@gmail.com  
 🔗 https://github.com/youssefrhd  

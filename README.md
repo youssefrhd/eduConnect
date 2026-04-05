@@ -127,7 +127,7 @@ spring.jpa.show-sql=true
 
 ```bash
 git clone https://github.com/youssefrhd/eduConnect.git
-cd backend
+cd eduConnect_back
 mvn clean install
 mvn spring-boot:run
 ```
@@ -140,7 +140,7 @@ http://localhost:8080
 ## 🎨 Frontend Setup
 
 ```bash
-cd frontend
+cd eduConnect_fr
 npm install
 ng serve
 ```
@@ -166,8 +166,7 @@ export const environment = {
 
 - JWT-based authentication  
 - Secure API endpoints  
-- Token stored on client-side  
-- Optional role-based access (ADMIN / USER)  
+- Token stored on client-side    
 
 ---
 

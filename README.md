@@ -4,7 +4,6 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)  
 ![Angular](https://img.shields.io/badge/Angular-19-red)  
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue)  
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
